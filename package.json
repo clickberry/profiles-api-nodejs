@@ -1,7 +1,7 @@
 {
   "name": "profiles-api-nodejs",
   "version": "0.0.1",
-  "description": "Profiles micro-service on Node.js",
+  "description": "Profiles API micro-service on Node.js",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.12.4",

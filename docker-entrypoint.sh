@@ -14,11 +14,5 @@ if [ -n "$NSQD_PORT_4150_TCP_ADDR" ] && [ -n "$NSQD_PORT_4150_TCP_PORT" ]; then
 fi
 echo "USING NSQD: ${NSQD_PORT_4150_TCP_ADDR}:${NSQD_PORT}"
 
-if [ -n "$NSQLOOKUPD_PORT_4161_TCP_ADDR" ] && [ -n "$NSQLOOKUPD_PORT_4161_TCP_PORT" ]; then
-  export NSQLOOKUPD_ADDRESSES="http://${NSQLOOKUPD_PORT_4161_TCP_ADDR}:${NSQLOOKUPD_PORT_4161_TCP_PORT}"
-fi
-echo "USING NSQLOOKUPD: ${NSQLOOKUPD_ADDRESSES}"
-
-
 # execute nodejs application
 exec /nodejs/bin/npm start
