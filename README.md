@@ -56,6 +56,11 @@ Gets profiles info.
 Updates user profile.
 
 ### Request
+| Header   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+
 | Body Param    | Description |
 |----------|-------------|
 | *email    | User email       |
