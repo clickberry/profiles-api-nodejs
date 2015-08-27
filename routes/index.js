@@ -1,3 +1,5 @@
+var debug = require('debug')('clickberry:profiles:api');
+
 exports.index = function (req, res) {
     res.render('index', {title: 'Todo App'});
 }
@@ -22,7 +24,7 @@ exports.notfound = function (req, res) {
 };
 
 exports.error = function (err, req, res, next) {
-    console.error(err.stack);
+    debug(err.stack);
     var msg;
 
     switch (err.type) {
