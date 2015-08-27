@@ -52,6 +52,20 @@ Gets profiles info.
 | StatusCode | 200       |
 | Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
 
+## PUT /{id}
+Updates user profile.
+
+### Request
+| Body Param    | Description |
+|----------|-------------|
+| *email    | User email       |
+| *name | User name    |
+
+### Response
+| HTTP       |  Value                                                             |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 200                                                                |
+
 
 # License
 Source code is under GNU GPL v3 [license](LICENSE).
