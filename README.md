@@ -10,9 +10,9 @@ Profiles micro-service on Node.js
 * [License](#license)
 
 # Architecture
-The application consists of two services: 
-* REST API service with database and messaging service (Bus) dependencies
-* Worker service listening for registration and account-delete messages from the Bus and creates or deletes profiles.
+The application consists of two services with database and messaging service (Bus) dependencies: 
+* REST API
+* Worker service listening for `registrations` and `account-deletes` messages from the Bus and creates or deletes profiles.
 
 # Technologies
 * Node.js
