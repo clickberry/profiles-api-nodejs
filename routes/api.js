@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Profile = require('../lib/profile');
+var Bus = require('../lib/bus');
+var bus = new Bus();
 
 router.get('/:profile_id', function (req, res, next) {
   Profile.get(req.params.profile_id, function (err, profile) {
@@ -25,13 +27,15 @@ router.put('/:profile_id', function (req, res, next) {
     return res.status(400).send();
   }
 
-  profile.save(function (err) {
+  profile.update(function (err) {
     if (err) {
       if (err.type === 'conflict') {
         return res.status(409).send();
       }
       return next(err);
     }
+
+    bus.publishUpdateProfile(profile);
     res.send();
   });
 });
