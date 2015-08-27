@@ -42,3 +42,5 @@ bus.on('delete', function (msg) {
     msg.finish();
   });
 });
+
+debug('Listening for messages...');
