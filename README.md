@@ -38,5 +38,20 @@ profile-updates | { id: *user_id*, name: *user_name*, email: *user_email* } | Pr
 
 # API
 
+## GET /{id}
+Gets profiles info.
+
+### Request
+| Header   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+### Response
+| HTTP       | Value     |
+|------------|-----------|
+| StatusCode | 200       |
+| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
+
+
 # License
 Source code is under GNU GPL v3 [license](LICENSE).
