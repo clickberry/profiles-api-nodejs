@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', api);
-app.use('*', routes.index);
 
 // error handlers
 app.use(routes.notfound);

@@ -1,9 +1,5 @@
 var debug = require('debug')('clickberry:profiles:api');
 
-exports.index = function (req, res) {
-    res.render('index', {title: 'Todo App'});
-}
-
 exports.notfound = function (req, res) {
     res.status(404).format({
         html: function () {
