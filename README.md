@@ -47,4 +47,7 @@ Topic | Message | Description
 :-- | :-- | :--
 profile-updates | { id: *user_id*, name: *user_name*, email: *user_email* } | Profile updates.
 
+# API
 
+# License
+Source code is under GNU GPL v3 [license](LICENSE).
