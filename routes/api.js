@@ -4,6 +4,10 @@ var Profile = require('../lib/profile');
 var Bus = require('../lib/bus');
 var bus = new Bus();
 
+router.get('/heartbeat', function (req, res) {
+  res.send();
+});
+
 router.get('/:profile_id', function (req, res, next) {
   Profile.get(req.params.profile_id, function (err, profile) {
     if (err) { return next(err); }
