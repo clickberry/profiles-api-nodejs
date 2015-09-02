@@ -39,12 +39,21 @@ profile-updates | { id: *user_id*, name: *user_name*, email: *user_email* } | Pr
 # API
 
 ## GET /{id}
-Gets profiles info.
+Gets profile info.
 
 ### Request
 | Header   | Value |
 |----------|-------------|
 | Authorization     | "JWT [accessToken]" |
+
+### Response
+| HTTP       | Value     |
+|------------|-----------|
+| StatusCode | 200       |
+| Body       | { "id": *user_id*, "name": *user_name* } |
+
+## GET /public/{id}
+Gets public profile info.
 
 ### Response
 | HTTP       | Value     |
