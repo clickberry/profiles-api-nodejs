@@ -44,7 +44,7 @@ Gets profile info.
 ### Request
 | Header   | Value |
 |----------|-------------|
-| Authorization     | "JWT [accessToken]" |
+| Authorization     | JWT [accessToken] |
 
 ### Response
 | HTTP       | Value     |
@@ -67,7 +67,7 @@ Updates user profile.
 ### Request
 | Header   | Value |
 |----------|-------------|
-| Authorization     | "JWT [accessToken]" |
+| Authorization     | JWT [accessToken] |
 
 
 | Body Param    | Description |
