@@ -26,6 +26,7 @@ NSQD_ADDRESS | bus.yourdomain.com | A hostname or an IP address of the NSQD runn
 NSQD_PORT | 4150 | A TCP port number of the NSQD running instance to publish messages to.
 REDIS_ADDRESS | redis.yourdomain.com | Redis server address.
 REDIS_PORT | 6379 | Redis server port.
+TOKEN_ACCESSSECRET | my secret | Access token secret.
 
 # Events
 The service generates events to the Bus (messaging service) in response to API requests.
