@@ -5,6 +5,7 @@ var Bus = require('../lib/bus');
 var bus = new Bus();
 var passport = require('passport');
 require('../config/jwt')(passport);
+var ProfileModel = require('../lib/profile-model');
 
 router.get('/heartbeat', function (req, res) {
   res.send();
@@ -22,7 +23,10 @@ router.get('/:profile_id',
       if (!profile) {
         return res.status(404).send({ message: 'Resource not found' });
       }
-      res.json(profile);
+
+      var profileModel = ProfileModel.create();
+      profileModel.update(profile, '*');
+      res.json(profileModel.toJSON(['default', 'private']));
     });
   });
 
@@ -33,10 +37,10 @@ router.get('/public/:profile_id',
       if (!profile) {
         return res.status(404).send({ message: 'Resource not found' });
       }
-      res.json({
-        id: profile.id,
-        name: profile.name
-      });
+
+      var profileModel = ProfileModel.create();
+      profileModel.update(profile);
+      res.json(profileModel.toJSON());
     });
   });
 
@@ -53,22 +57,26 @@ router.put('/:profile_id',
       email: req.body.email
     });
 
-    if (!profile.id ||
-        !profile.name ||
-        !profile.email) {
-      return res.status(400).send();
-    }
+    // validate model
+    var profileModel = ProfileModel.create();
+    profileModel.update(profile, '*');
 
-    profile.update(function (err) {
-      if (err) {
-        if (err.type === 'conflict') {
-          return res.status(409).send();
-        }
-        return next(err);
+    profileModel.validate().then(function () {
+      if (profileModel.isValid) {
+        profile.update(function (err) {
+          if (err) {
+            if (err.type === 'conflict') {
+              return res.status(409).send();
+            }
+            return next(err);
+          }
+
+          bus.publishUpdateProfile(profile);
+          res.send();
+        });
+      } else {
+        res.status(400).send({ errors: profileModel.errors });
       }
-
-      bus.publishUpdateProfile(profile);
-      res.send();
     });
   });
 

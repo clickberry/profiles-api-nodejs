@@ -10,6 +10,7 @@
     "hiredis": "^0.4.1",
     "jade": "^1.11.0",
     "morgan": "^1.6.0",
+    "nodejs-model": "^0.1.6",
     "nsqjs": "^0.7.6",
     "passport": "^0.3.0",
     "passport-jwt": "^1.1.1",
