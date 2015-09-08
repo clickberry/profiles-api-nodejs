@@ -51,7 +51,7 @@ Gets profile info.
 | HTTP       | Value     |
 |------------|-----------|
 | StatusCode | 200       |
-| Body       | { "id": *user_id*, "name": *user_name* } |
+| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
 
 ## GET /public/{id}
 Gets public profile info.
@@ -60,7 +60,7 @@ Gets public profile info.
 | HTTP       | Value     |
 |------------|-----------|
 | StatusCode | 200       |
-| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
+| Body       | { "id": *user_id*, "name": *user_name* } |
 
 ## PUT /{id}
 Updates user profile.
