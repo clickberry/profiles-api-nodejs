@@ -9,7 +9,7 @@ Profiles micro-service on Node.js
 * [License](#license)
 
 # Architecture
-The application is a REST API with database and messaging service (Bus) dependencies.
+The application is a REST API with database (Redis) and messaging service (Bus) dependencies.
 
 # Technologies
 * Node.js
