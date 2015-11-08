@@ -71,8 +71,10 @@ router.put('/:profile_id',
             return next(err);
           }
 
-          bus.publishUpdateProfile(profile);
-          res.send();
+          bus.publishUpdateProfile(profile, function (err) {
+            if (err) { return next(err); }
+            return res.json(profileModel.toJSON());
+          });
         });
       } else {
         res.status(400).send({ errors: profileModel.errors });
