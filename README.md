@@ -50,7 +50,7 @@ Gets profile info.
 ### Response
 | HTTP       | Value     |
 |------------|-----------|
-| StatusCode | 200       |
+| StatusCode | 200, 403, 404 |
 | Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
 
 ## GET /public/{id}
@@ -59,7 +59,7 @@ Gets public profile info.
 ### Response
 | HTTP       | Value     |
 |------------|-----------|
-| StatusCode | 200       |
+| StatusCode | 200, 404 |
 | Body       | { "id": *user_id*, "name": *user_name* } |
 
 ## PUT /{id}
@@ -79,7 +79,8 @@ Updates user profile.
 ### Response
 | HTTP       |  Value                                                             |
 |------------|--------------------------------------------------------------------|
-| StatusCode | 200                                                                |
+| StatusCode | 200, 400, 403, 409                                                 |
+| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
 
 
 # License
