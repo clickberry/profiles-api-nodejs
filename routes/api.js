@@ -65,12 +65,15 @@ router.put('/:profile_id',
       if (profileModel.isValid) {
         profile.update(function (err) {
           if (err) {
-            if (err.type === 'conflict') {
+            if (err.type === 'notFound') {
+              return res.status(404).send();
+            } else if (err.type === 'conflict') {
               return res.status(409).send();
             }
             return next(err);
           }
 
+          // emit event
           bus.publishUpdateProfile(profile, function (err) {
             if (err) { return next(err); }
             return res.json(profileModel.toJSON());
