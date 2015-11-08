@@ -79,7 +79,7 @@ Updates user profile.
 ### Response
 | HTTP       |  Value                                                             |
 |------------|--------------------------------------------------------------------|
-| StatusCode | 200, 400, 403, 409                                                 |
+| StatusCode | 200, 400, 403, 404, 409                                                 |
 | Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
 
 
