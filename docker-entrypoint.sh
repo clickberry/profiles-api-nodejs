@@ -15,4 +15,4 @@ fi
 echo "USING NSQD: ${NSQD_PORT_4150_TCP_ADDR}:${NSQD_PORT}"
 
 # execute nodejs application
-exec /nodejs/bin/npm start
+exec npm start
