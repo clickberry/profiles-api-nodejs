@@ -54,7 +54,8 @@ router.put('/:profile_id',
     var profile = new Profile({
       id: req.params.profile_id,
       name: req.body.name,
-      email: req.body.email
+      email: req.body.email,
+      avatarUrl: req.body.avatarUrl
     });
 
     // validate model
