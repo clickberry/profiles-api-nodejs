@@ -35,7 +35,7 @@ The service generates events to the Bus (messaging service) in response to API r
 
 Topic | Message | Description
 :-- | :-- | :--
-profile-updates | { id: *user_id*, name: *user_name*, email: *user_email* } | Profile updates.
+profile-updates | { id: *user_id*, name: *user_name*, email: *user_email*, "avatarUrl": *avatar_url* } | Profile updates.
 
 # API
 
@@ -51,7 +51,7 @@ Gets profile info.
 | HTTP       | Value     |
 |------------|-----------|
 | StatusCode | 200, 403, 404 |
-| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
+| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name*, "avatarUrl": *avatar_url*} |
 
 ## GET /public/{id}
 Gets public profile info.
@@ -60,7 +60,16 @@ Gets public profile info.
 | HTTP       | Value     |
 |------------|-----------|
 | StatusCode | 200, 404 |
-| Body       | { "id": *user_id*, "name": *user_name* } |
+| Body       | { "id": *user_id*, "name": *user_name*, "avatarUrl": *avatar_url* } |
+
+## GET /public/list/{ids}
+Gets public profiles by ids (comma separated: id1,id2,id3).
+
+### Response
+| HTTP       | Value     |
+|------------|-----------|
+| StatusCode | 200 |
+| Body       | [{ "id": *user_id1*, "name": *user_name1*, "avatarUrl": *avatar_url1* }, { "id": *user_id2*, "name": *user_name2*, "avatarUrl": *avatar_url2* }, ...] |
 
 ## PUT /{id}
 Updates user profile.
@@ -80,7 +89,7 @@ Updates user profile.
 | HTTP       |  Value                                                             |
 |------------|--------------------------------------------------------------------|
 | StatusCode | 200, 400, 403, 404, 409                                                 |
-| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name* } |
+| Body       | { "id": *user_id*, "email": *user_email*, "name": *user_name*, "avatarUrl": *avatar_url* } |
 
 
 # License
