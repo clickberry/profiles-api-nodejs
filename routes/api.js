@@ -44,6 +44,47 @@ router.get('/public/:profile_id',
     });
   });
 
+router.get('/public/list/:profile_ids',
+  function (req, res, next) {
+    var ids = req.params.profile_ids.split(',');
+    if (ids.length == 0) {
+      return res.json([]);
+    } else if (ids.length > 100) {
+      ids.length = 100;
+    }
+
+    function loadProfileById(id, fn) {
+      Profile.get(id, function (err, profile) {
+        if (err) { return fn(); }
+        if (!profile) {
+          return fn();
+        }
+
+        var profileModel = ProfileModel.create();
+        profileModel.update(profile);
+        return fn(profileModel.toJSON());
+      });
+    }
+
+    var i;
+    var profiles = [];
+    var done = 0;
+    for (i = 0; i < ids.length; ++i) {
+      (function (id) {
+        loadProfileById(id, function (p) {
+          done++;
+          if (p != null) {
+            profiles.push(p);
+          }
+
+          if (done == ids.length) {
+            res.json(profiles);
+          }
+        });
+      })(ids[i]);
+    }
+  });
+
 router.post('/:profile_id',
   passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
   function (req, res, next) {

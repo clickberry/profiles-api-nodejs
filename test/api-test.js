@@ -28,15 +28,73 @@ describe('GET /', function () {
       .get('/' + id)
       .expect(401, done);
   });
-});
 
-describe('GET /', function () {
-  var id = uuid.v4();
-  it('get unexisting profile', function (done) {
+  it('get unexisting public profile', function (done) {
     request(app)
       .get('/public/' + id)
       .expect(404, done);
   });
+});
+
+describe('LIST /', function () {
+  var id1 = uuid.v4();
+  var name1 = 'name' + id1;
+  var email1 = id1 + '@clickberry.com';
+  var avatarUrl1 = id1;
+  var profile1 = {};
+  var profile_auth_token1;
+
+  var id2 = uuid.v4();
+  var name2 = 'name' + id2;
+  var email2 = id2 + '@clickberry.com';
+  var avatarUrl2 = id2;
+  var profile2 = {};
+  var profile_auth_token2;
+
+  after(function (done) {
+    request(app)
+      .del('/' + profile1.id + '?auth_token=' + profile_auth_token1)
+      .expect(200)
+      .end(function () {
+        request(app)
+          .del('/' + profile2.id + '?auth_token=' + profile_auth_token2)
+          .expect(200)
+          .end(done); 
+      });
+  });
+
+  it('create profiles', function (done) {
+    createProfile(id1, name1, email1, avatarUrl1, function (err, data) {
+      if (err) { return done(err); }
+      profile1 = data.body;
+      profile_auth_token1 = data.auth_token;
+      
+      createProfile(id2, name2, email2, avatarUrl2, function (err, data) {
+        if (err) { return done(err); }
+        profile2 = data.body;
+        profile_auth_token2 = data.auth_token;
+        done();
+      });  
+    });
+  });
+
+  it('list profiles', function (done) {
+    var ids = profile1.id + ',' + profile2.id;
+    var idsArray = ids.split(',');
+
+    function listContainsBothIds(res) {
+      if (res.body.length != idsArray.length) throw new Error("List should has lenth " + idsArray.length);
+      if (idsArray.indexOf(res.body[0].id) === -1) throw new Error("Unexpected id " + res.body[0].id + " (" + ids + ")");
+      if (idsArray.indexOf(res.body[1].id) === -1) throw new Error("Unexpected id " + res.body[1].id + " (" + ids + ")");
+    }
+
+    request(app)
+      .get('/public/list/' + ids)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(listContainsBothIds)
+      .end(done);
+  });  
 });
 
 describe('POST /', function () {
