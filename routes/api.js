@@ -12,7 +12,7 @@ router.get('/heartbeat', function (req, res) {
 });
 
 router.get('/:profile_id',
-  passport.authenticate('access-token', { session: false, assignProperty: 'payload' }),
+  passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
   function (req, res, next) {
     if (req.payload.userId !== req.params.profile_id) {
       return res.status(403).send();
@@ -44,8 +44,44 @@ router.get('/public/:profile_id',
     });
   });
 
+router.post('/:profile_id',
+  passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
+  function (req, res, next) {
+    if (req.payload.userId !== req.params.profile_id) {
+      return res.status(403).send();
+    }
+
+    var profile = new Profile({
+      id: req.params.profile_id,
+      name: req.body.name,
+      email: req.body.email,
+      avatarUrl: req.body.avatarUrl
+    });
+
+    // validate model
+    var profileModel = ProfileModel.create();
+    profileModel.update(profile, '*');
+
+    profileModel.validate().then(function () {
+      if (profileModel.isValid) {
+        profile.save(function (err) {
+          if (err) {
+            if (err.type === 'conflict') {
+              return res.status(409).send();
+            }
+            return next(err);
+          }
+
+          return res.status(201).json(profileModel.toJSON(['default', 'private']));
+        });
+      } else {
+        res.status(400).send({ errors: profileModel.errors });
+      }
+    });
+  });
+
 router.put('/:profile_id',
-  passport.authenticate('access-token', { session: false, assignProperty: 'payload' }),
+  passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
   function (req, res, next) {
     if (req.payload.userId !== req.params.profile_id) {
       return res.status(403).send();
@@ -77,7 +113,7 @@ router.put('/:profile_id',
           // emit event
           bus.publishUpdateProfile(profile, function (err) {
             if (err) { return next(err); }
-            return res.json(profileModel.toJSON());
+            return res.json(profileModel.toJSON(['default', 'private']));
           });
         });
       } else {
@@ -85,5 +121,25 @@ router.put('/:profile_id',
       }
     });
   });
+
+router.delete('/:profile_id',
+  passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
+  function (req, res, next) {
+    if (req.payload.userId !== req.params.profile_id) {
+      return res.status(403).send();
+    }
+
+    Profile.get(req.params.profile_id, function (err, data) {
+      if (err) { return next(err); }
+      if (!data) {
+        return res.status(404).send({ message: 'Resource not found' });
+      }
+
+      Profile.del(req.params.profile_id, function (err) {
+        if (err) { return next(err); }
+        res.send();
+      });
+    });        
+  });  
 
 module.exports = router;
